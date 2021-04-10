@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import socket from "../SocketConnection";
+import webCG from "./webcg";
 
 export const NameContext = React.createContext(null);
 
@@ -10,23 +10,24 @@ export const NameProvider = ({ children }) => {
   const [visitorName, setVisitorName] = useState("VISITOR");
   const [visitorShortName, setVisitorShortName] = useState("VISITOR");
 
-  //Setting up Socket IO listeners
-  useEffect(() => {
-    socket.on("TEAM-NAME-UPDATE", (data) => {
-      if (data.type === "homeTeam") {
-        setHomeName(data.name);
-      } else if (data.type === "visitorTeam") {
-        setVisitorName(data.name);
-      }
-    });
-    socket.on("TEAM-SHORTNAME-UPDATE", (data) => {
-      if (data.type === "homeTeam") {
-        setHomeShortName(data.name);
-      } else if (data.type === "visitorTeam") {
-        setVisitorShortName(data.name);
-      }
-    });
-  }, []);
+  webCG.on('data', (data) => {
+    switch (data.type){
+      case ("team-name-update"):
+        if (data.payload.team === "homeTeam") {
+          setHomeName(data.payload.name);
+        } else if (data.payload.team === "visitorTeam") {
+          setVisitorName(data.payload.name);
+        }
+        break;
+      case ("team-shortname-update"):
+        if (data.payload.team === "homeTeam") {
+          setHomeShortName(data.payload.name);
+        } else if (data.payload.team === "visitorTeam") {
+          setVisitorShortName(data.payload.name);
+        }
+        break;
+    }
+  })
 
   //variables to make accessible through useContext
   const contextValue = {

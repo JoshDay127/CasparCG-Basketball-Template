@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import socket from "../SocketConnection";
 
 export const CustomisationContext = React.createContext(null);
 
@@ -21,27 +20,6 @@ export const CustomisationProvider = ({ children }) => {
     ScoreboardGradientSecondary,
     playerNumberHighlight,
   };
-
-  /*
-    //Setting up Socket IO listeners
-    useEffect(() => {
-        socket.on("TEAM-NAME-UPDATE", (data) => {
-            if (data.type === "homeTeam") {
-                setHomeName(data.name);
-            } else if (data.type === "visitorTeam") {
-                setVisitorName(data.name);
-            }
-        });
-        socket.on("TEAM-SHORTNAME-UPDATE", (data) => {
-            if (data.type === "homeTeam") {
-                setHomeShortName(data.name);
-            } else if (data.type === "visitorTeam") {
-                setVisitorShortName(data.name);
-            }
-        });
-    }, []);
-*/
-
   //variables to make accessible through useContext
 
   //Returning context provider

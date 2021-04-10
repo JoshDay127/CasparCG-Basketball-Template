@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import socket from "../SocketConnection";
+import webCG from "./webcg";
 
 export const TimerContext = React.createContext(null);
 
@@ -11,24 +11,31 @@ export const TimerProvider = ({ children }) => {
   const [paused, setPaused] = useState(true);
   const [sync, setSync] = useState(true);
 
-  useEffect(() => {
-    socket.on("TIMER-PAUSE", () => {
-      setPaused(true);
-    });
-    socket.on("TIMER-PLAY", () => {
-      setPaused(false);
-    });
-    socket.on("TIMER-SET", (data) => {
-      setMinutes(data.minutes);
-      setSeconds(data.seconds);
-    });
-  }, []);
+  webCG.on('data', (data) => {
+    switch (data.type){
+      case "timer-pause":
+        setPaused(true);
+        break;
+      case "timer-play":
+        setPaused(false);
+        break;
+      case "timer-set":
+        setMinutes(data.payload.minutes);
+        setSeconds(data.payload.seconds);
+        break;
+      default:
+        break;
+    }
+  })
 
+/*
+//TODO TIMER SYNC
   useEffect(() => {
     socket.on("TIMER-SYNC-REQ", () => {
       setSync(true);
     });
   }, []);
+*/
 
   useEffect(() => {
     let myInterval = setInterval(() => {

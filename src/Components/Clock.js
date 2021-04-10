@@ -1,19 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import { TimerContext } from "./Context/TimerContext";
-import socket from "./SocketConnection";
+
 
 import "../App.scss";
 
 const Clock = () => {
   const { minutes, seconds, sync, setSync } = useContext(TimerContext);
 
-  useEffect(() => {
+/*  useEffect(() => {
     if (sync) {
       socket.emit("TIMER-SYNC-RES", { minutes: minutes, seconds: seconds });
       setSync(false);
     }
-  }, [sync]);
+  }, [sync]);*/
 
   return (
     <div className="Clock">

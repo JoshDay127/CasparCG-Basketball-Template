@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-import socket from "../SocketConnection";
+import webCG from "./webcg";
 
 export const ScoreContext = React.createContext(null);
 
 export const ScoreProvider = ({ children }) => {
   const [homeScore, setHomeScore] = useState(0);
   const [visitorScore, setVisitorScore] = useState(0);
-  useEffect(() => {
-    socket.on("SCORE-UPDATE", (data) => {
-      if (data.team === "homeTeam") {
-        setHomeScore(data.score);
-      } else if (data.team === "visitorTeam") {
-        setVisitorScore(data.score);
+
+  webCG.on('data', (data) => {
+    if (data.type="score-update"){
+      if (data.payload.team === "homeTeam") {
+        setHomeScore(data.payload.score);
+      } else if (data.payload.team === "visitorTeam") {
+        setVisitorScore(data.payload.score);
       }
-    });
-  });
+    }
+  })
 
   const contextValue = {
     homeScore,
