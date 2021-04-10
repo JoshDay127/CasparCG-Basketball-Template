@@ -2,6 +2,7 @@
   "name": "template",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "bootstrap": "^4.6.0",
     "node-sass": "^4.14.1",
@@ -11,7 +12,9 @@
     "react-palette": "^1.0.2",
     "react-scripts": "4.0.1",
     "react-spring": "^8.0.27",
-    "web-vitals": "^0.2.4"
+    "socket.io-client": "^4.0.1",
+    "web-vitals": "^0.2.4",
+    "webcg-framework": "^2.6.0"
   },
   "scripts": {
     "start": "react-scripts start",
