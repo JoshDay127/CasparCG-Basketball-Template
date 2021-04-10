@@ -11,11 +11,6 @@ const Quarter = () => {
       setQuarter(data.payload.quarter);
     }
   })
-  useEffect(() => {
-    socket.on("SET-QUARTER", (data) => {
-      setQuarter(data);
-    });
-  }, []);
   return <div className="Quarter"> {quarter} </div>;
 };
 
