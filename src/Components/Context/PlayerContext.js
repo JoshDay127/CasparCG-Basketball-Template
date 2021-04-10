@@ -27,6 +27,19 @@ export const PlayerProvider = ({ children }) => {
         if (data.payload.team == "homeTeam"){
           let elementsIndex = homePlayers.findIndex(player => player.id == data.payload.playerID);
           let newPlayers = [...homePlayers];
+          newPlayers[elementsIndex] = {...newPlayers[elementsIndex], number: data.payload.playerName}
+          setHomePlayers(newPlayers)
+        }else if (data.payload.team == "visitorTeam"){
+          let elementsIndex = visitorPlayers.findIndex(player => player.id == data.payload.playerID);
+          let newPlayers = [...visitorPlayers];
+          newPlayers[elementsIndex] = {...newPlayers[elementsIndex], number: data.payload.playerName}
+          setVisitorPlayers(newPlayers);
+        }
+        break;
+      case "player-number-update":
+        if (data.payload.team == "homeTeam"){
+          let elementsIndex = homePlayers.findIndex(player => player.id == data.payload.playerID);
+          let newPlayers = [...homePlayers];
           newPlayers[elementsIndex] = {...newPlayers[elementsIndex], number: data.payload.playerNumber}
           setHomePlayers(newPlayers)
         }else if (data.payload.team == "visitorTeam"){
@@ -35,8 +48,6 @@ export const PlayerProvider = ({ children }) => {
           newPlayers[elementsIndex] = {...newPlayers[elementsIndex], number: data.payload.playerNumber}
           setVisitorPlayers(newPlayers);
         }
-        break;
-      case "player-number-update":
         break;
       default:
         break;

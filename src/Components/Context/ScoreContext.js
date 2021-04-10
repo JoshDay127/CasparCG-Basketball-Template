@@ -8,11 +8,16 @@ export const ScoreProvider = ({ children }) => {
   const [visitorScore, setVisitorScore] = useState(0);
 
   webCG.on('data', (data) => {
-    if (data.type="score-update"){
-      if (data.payload.team === "homeTeam") {
-        setHomeScore(data.payload.score);
-      } else if (data.payload.team === "visitorTeam") {
-        setVisitorScore(data.payload.score);
+    console.log(data.type);
+    if (data.type == "score-update"){
+      if (typeof data.payload?.team !== "undefined"){
+        if (data.payload.team === "homeTeam") {
+          setHomeScore(data.payload.score);
+        } else if (data.payload.team === "visitorTeam") {
+          setVisitorScore(data.payload.score);
+        }
+      }else{
+        console.log("no payload ya no")
       }
     }
   })
